@@ -8,6 +8,12 @@ function fsum($a = [])
     }
     return $sum; 
 }
+function fmax($a = []){
+    return max($a); 
+}
+function fmin($a = []){
+    return min($a); 
+}
 // cach 1: 
 // echo array_sum($a); 
 // cach 2: 
@@ -19,6 +25,10 @@ function fsum($a = [])
 // $tong = fsum($a);
 // echo $tong; 
 
-require_once 'student.php'; 
+require_once 'handle_student.php'; 
+
+echo '<pre>'; 
+print_r(fread_file('_student.txt')); 
+
 
 ?>
