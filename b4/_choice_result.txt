@@ -1,0 +1,9 @@
+stt | nội dung | đáp án
+1 | 100 gà, 100 chó | A
+1 | 20 gà, 20 chó | B
+1 | 10 gà, 10 chó | C
+1 | 14 gà, 12 chó | D
+2 | gà | A
+2 | voi | B
+2 | run | C
+2 | dế | D

@@ -9,7 +9,9 @@ function fread_file($file='')
 
         $data = fread($open_f, filesize($file));    // then read all file 
 
+        fclose($open_f); 
         return $data; 
+
     } 
     else return 'error: read file error'; 
 }
@@ -33,6 +35,7 @@ function checkMission()
         $ob = implode('| ', $ob); 
         fwrite($fp, $ob); 
     }
+    fclose($fp); 
 
 }
 
