@@ -14,8 +14,25 @@ function fread_file($file='')
     else return 'error: read file error'; 
 }
 
-// only write
-function fwrite_file()
+// check quyền ghi file;
+function checkMission()   
 {
-    
+    $fp = @fopen('_student.txt', "a+");
+  
+    // Kiểm tra file mở thành công không
+    if (!$fp) {
+        echo 'Mở file không thành công';
+    }
+    else
+    {
+        // Đọc file và trả về nội dung
+        // $data = fread($fp, filesize('_student.txt'));
+        $ob = [
+            'nam', '22'
+        ];
+        $ob = implode('| ', $ob); 
+        fwrite($fp, $ob); 
+    }
+
 }
+
