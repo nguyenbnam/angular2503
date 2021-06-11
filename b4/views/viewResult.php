@@ -20,20 +20,18 @@
             <form action="?action=result" method="POST">
 
               <?php 
-              $i=1; 
-              foreach($arr_question_all as $key=>$values) : ?>
-                <label  for="">Câu hỏi <?php echo $key; echo ': '.$values['question']?></label>
+              foreach($array_result as $key=>$values) : ?>
+                <label  for="">Câu hỏi <?php echo $key?></label>
                 <?php foreach($values['option'] as $key_child=>$value_child) : ?>
                   <?php  //print_r($key)//print_r($key_child); print_r($value_child); ?>
                   <div class="form-check">  
-                    <input type="radio" name="<?php echo $i ?>"  value="<?php echo $key_child ?>" required />
+                    <input type="radio" name="<?php echo $key ?>"  value="<?php echo $key_child ?>" required />
                     <label  for=""><?php echo $key_child.': '.$value_child[0] ?></label>
                   </div>
                 <?php endforeach;  $i++; // vong for cua thang con values?>
                
               <?php endforeach; // vong for cua thang arr_question?>
 
-              <button type="submit" class="btn btn-dark" name="submit">Hoàn thành</button>
             </form>
           </div>
         </div>
