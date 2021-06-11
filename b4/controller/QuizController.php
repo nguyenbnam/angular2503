@@ -117,12 +117,12 @@ class QuizController extends BaseController {
             // print_r($value);
             // var_dump((int)trim($key));die;
             $key=(int)trim($key); 
-            // print_r($_POST[$key]);die; 
+            // var_dump(trims($_POST[$key]));die; 
             foreach($value as $key_child => $value_child){
-                // print_r($key_child); die;
+                // var_dump($key_child); die;
                 // $res = ($key_child==$_POST[$key])? 'dung' : 'sai';
-                $resq = ($_POST[$key]=$key_child)? 'dung' : 'sai';
-                if($_POST[$key]=$key_child){
+                // $resq = ($_POST[$key]==$key_child)? 'dung' : 'sai';
+                if(trim($_POST[$key])==trim($key_child)){
                     $resq = 'dung';
                 }
                 else $resq = 'sai';
@@ -131,14 +131,14 @@ class QuizController extends BaseController {
 
             // echo $res; 
         }   
-        print_r($res); 
+        // print_r($res); 
         
         
 
-        // $this->view('viewResult', [
-        //     'array_result'=> $array_result, 
-        //     '_post'=> $_POST
-        // ]); 
+        $this->view('viewResult', [
+            'array_result'=> $array_result, 
+            '_post'=> $_POST
+        ]); 
     }
 
 }

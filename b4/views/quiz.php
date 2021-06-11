@@ -12,7 +12,7 @@
   <body>
       <div class="container">
         <div class="jumbotron text-center">
-            <h1 class="display-4">Bài kiểm tra chắc nghiệm</h1>
+            <h1 class="display-4">Bài kiểm tra trắc nghiệm</h1>
             <hr class="my-4">
         </div>
         <div class="row">
