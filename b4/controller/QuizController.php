@@ -5,9 +5,6 @@ class QuizController extends BaseController {
         $this->model = $this -> model('model');
 
     }
-
-
-
     public function _getQuiz()
     {
         $questions =  $this->model->getData('question');
@@ -15,23 +12,20 @@ class QuizController extends BaseController {
         $options =  $this->model->getData('options');
         // gộp chung đáp án đúng với cái nay
         $result =  $this->model->getData('result');
-
         /**
-         * để cho ra 1 câu hỏi cà các đáp án thì sẽ là: 
-         * id [chứa câu hỏi][
-         *      chứa các lựa chọn - 
-         *      - chứa câu trả lời 
-         * ]
-         * [id question][question] = cau hoi; 
-         * trong câu hỏi chứa câu trả lời; 
-         * [id question][lựa chọn] = câu trả lời; 
-         * bên view se
-         */
-
+        * để cho ra 1 câu hỏi cà các đáp án thì sẽ là: 
+        * id [chứa câu hỏi][
+        *      chứa các lựa chọn - 
+        *      - chứa câu trả lời 
+        * ]
+        * [id question][question] = cau hoi; 
+        * trong câu hỏi chứa câu trả lời; 
+        * [id question][lựa chọn] = câu trả lời; 
+        * bên view se
+        */
         $array_questions = array();
         $array_options = array(); 
         //$array_result = array(); 
-
         foreach($questions as $key =>$value) {
             $tmp = explode('|', $value);
             // echo '<pre>'; 
@@ -40,7 +34,6 @@ class QuizController extends BaseController {
             $question =$tmp[1];  // gán câu hỏi với id 
             $array_questions[$id] = array('question'=>$question); // gộp cái câu hỏi với id câu hỏi số; 
         }
-
         foreach($options as $key => $value){
             $tmp = explode('|', $value); 
             // echo '<pre>'; 
@@ -51,7 +44,6 @@ class QuizController extends BaseController {
             // và gộp các đáp án với câu hỏi + lựa chọn 
             $array_options[$id][$option]= [$answer]; // gán giá trị vào mảng 2 chiều 
         }
-
         foreach($result as $key => $value){
             $tmp = explode('|', $value); 
             // echo '<pre>'; 
@@ -62,14 +54,12 @@ class QuizController extends BaseController {
             // và gộp các đáp án với câu hỏi + lựa chọn 
             $array_result[$id][$option]= [$result]; // gán giá trị vào mảng 2 chiều 
         }
-
         // echo '<pre>';
         // print_r($array_result); die;
         // echo '<pre>';
         // print_r($array_options); die;
         // echo '<pre>';
         // print_r($array_questions); die;
-
         // gộp câu hỏi và các lựa chọn vào mảng 2 chiều; 
         $arr_question_all = array(); // tạo ra 1 mảng rỗng để chứa câu hỏi và các lựa chọn 
         foreach($array_questions as $key => $value){    //lặp cái câu hỏi để lấy id câu hỏi gộp cho các lựa chọn 
@@ -77,14 +67,12 @@ class QuizController extends BaseController {
             $arr_question_all[$key]['option'] = $array_options[$key]; // gán các option cho câu hỏi đó
             // gán thêm cho n cái đáp án 
             //$arr_question_all[$key]['result']= $array_result[$key]; // $array_result[$key] là giá trị truong cai mang đó 
-
         }
         // echo '<pre>';
         // print_r($arr_question_all); die;
-        
         //đẩy n ra view; 
         $this->view('quiz', [
-            'arr_question_all'=>$arr_question_all
+        'arr_question_all'=>$arr_question_all
         ]);
     }
 
@@ -105,40 +93,44 @@ class QuizController extends BaseController {
             $array_result[$id][$option] = $answer;
             // handle
         }
-
-
-        echo '<pre>'; 
-        // print_r($array_result); 
+        // echo '<pre>'; 
+        // print_r($array_result); die;
         array_pop($_POST);  
-        // print_r($_POST[$key]); die; 
-        $array_right = array(); 
-        $res = array(); 
+        // print_r($_POST); die; 
+        $res = array();
+        $_true = 0;  
         foreach($array_result as $key => $value){
-            // print_r($value);
-            // var_dump((int)trim($key));die;
-            $key=(int)trim($key); 
-            // var_dump(trims($_POST[$key]));die; 
-            foreach($value as $key_child => $value_child){
-                // var_dump($key_child); die;
-                // $res = ($key_child==$_POST[$key])? 'dung' : 'sai';
-                // $resq = ($_POST[$key]==$key_child)? 'dung' : 'sai';
-                if(trim($_POST[$key])==trim($key_child)){
-                    $resq = 'dung';
-                }
-                else $resq = 'sai';
-                $res[$key] = $resq; 
+        // print_r($value);
+        // var_dump((int)trim($key));die;
+        $key=(int)trim($key); 
+        // var_dump(trims($_POST[$key]));die; 
+        
+        foreach($value as $key_child => $value_child){
+            // var_dump($key_child); die;
+            // $res = ($key_child==$_POST[$key])? 'dung' : 'sai';
+            // $resq = ($_POST[$key]==$key_child)? 'dung' : 'sai';
+            if(trim($_POST[$key])==trim($key_child)){
+                $resq = true;
+                $_true+=1;
             }
+                else {
+                    $resq = false;
+            }
+            // lấy nốt đáp án. xong gán sang bên kia. ok 
+            // nếu dung thì cho n điểm k đúng thì khoanh đỏ nó; là xong. sáng mai chốt r sang SQL; 
+        }
+        // echo $res; 
+        
+        $res[$key]['result']= $resq; 
+        $res[$key]['_true']= $_true; 
 
-            // echo $res; 
-        }   
+    }   
+    // echo '<pre>'; 
         // print_r($res); 
-        
-        
-
         $this->view('viewResult', [
-            'array_result'=> $array_result, 
-            '_post'=> $_POST
+        'res'=> $res, 
+        '_true'=>$_true,
+        'array_result'=>$array_result
         ]); 
     }
-
 }
