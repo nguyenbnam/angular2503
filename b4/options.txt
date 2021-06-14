@@ -1,0 +1,9 @@
+stt | lua chon | đáp án
+1 | A| 100 gà, 100 chó 
+1 | B| 20 gà, 20 chó
+1 | C | 10 gà, 10 chó 
+1 | D | 14 gà, 12 chó
+2 | A| gà
+2 | B | voi
+2 | C | run
+2 | D| dế
